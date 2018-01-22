@@ -1,0 +1,49 @@
+<head>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.es6.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>  
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <style>
+        .highlight{
+          background: yellow;
+          color: black;
+        }
+        
+      </style>
+  <title>Tealium Checker</title>
+</head>
+<body>
+  <div class="container">
+  <h1>
+    <%= tealium %>
+  </h1>
+
+  <h5>Here's the full HTML with Tealium related code highlighted in <span class="highlight">yellow</span>:</h5>
+  <p class="content">
+    <%= content %>
+  </p>
+  </div>
+</body>
+
+<script>
+  window.addEventListener('DOMContentLoaded', function(){
+    var instance = new Mark(document.querySelector("p.content"));
+    instance.mark("utag", {
+    "className": "highlight"
+    });
+  })
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+

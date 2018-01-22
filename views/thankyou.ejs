@@ -1,0 +1,26 @@
+<head>
+    <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDPx7OaGYa0D0pepi4NhkjtyhY_sxEjESg",
+    authDomain: "test-f5a84.firebaseapp.com",
+    databaseURL: "https://test-f5a84.firebaseio.com",
+    projectId: "test-f5a84",
+    storageBucket: "test-f5a84.appspot.com",
+    messagingSenderId: "564153605467"
+  };
+  firebase.initializeApp(config);
+</script>
+  <title>Firebase App</title>
+</head>
+<h1>Thank you!</h1>
+
+
+<script>
+var database = firebase.database();
+  var userRef = firebase.database().ref('users/');
+userRef.on('value', function(data) {
+  console.log(data.val())
+});
+</script>

@@ -1,0 +1,90 @@
+<head>
+      <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js"></script>
+
+<script>
+  //https://hsbcbankglobal.sc.omtrdc.net/b/ss/hsbc-rbwm-hk/1/JS-2.0.0/s16855133044506?AQB=1&ndh=1&pf=1&t=5%2F11%2F2017%2011%3A50%3A2%202%20-480&sdid=0FFCA127F80FBD19-7F1859989473FDEB&mid=33189911396673572041152811449490918852&aamlh=11&ce=UTF-8&ns=hsbcbankglobal&pageName=pws%3Ahomepage&g=https%3A%2F%2Fwww.hsbc.com.hk%2F&cc=USD&ch=homepage&server=www.hsbc.com.hk&v0=alexemailtest&events=event5%2Cevent24&aamb=RKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y&c1=N%2FA&v1=pws%3Ahomepage&l1=amh_pib_sx_e%2CAMH_RBWM_PWS_DOR_M_SIS_01_E%2CAMH_RBWM_GPWS_2017_DOOR_IMPINF_09%239%2CAMH_RBWM_PWS_2013_HPI_D_FX_01_X%23promo%2CAMH_RBWM_PWS_DOL_M_CRDBTI_01_X%2CAMH_RBWM_PWS_DOL_M_OFFUS_01_X%2CAMH_RBWM_PWS_DOL_M_PILJUN_01_E%2CAMH_RBWM_PWS_DOL_M_WEMACQ_01_E%2CAMH_RBWM_PWS_DOL_M_WEMACQ_02_E%2CAMH_RBWM_PWS_DOL_M_WEMFX_01_E%2CAMH_RBWM_PWS_DOL_M_WEMRMB_01_E%2CAMH_RBWM_PWS_DOL_M_INS_01_E%2CAMH_RBWM_PWS_DOR_M_DIGITA_01_E%2CAMH_RBWM_PWS_DOR_M_SCC_01_E%2CAMH_RBWM_PWS_DOR_M_SCA_01_E%2CAMH_RBWM_PWS_DOR_M_SMG_01_E%2CAMH_RBWM_PWS_DOR_M_SIV_01_E%2CAMH_RBWM_PWS_1712_HPS_M_WINTER_01_E%2CAMH_RBWM_PWS_1711_HPS_M_CANCER_02_E%2CAMH_RBWM_PWS_1711_HPS_M_XERO_03_E%2CAMH_RBWM_PWS_1712_HPS_M_CRDSPD_04_E%2CAMH_RBWM_PWS_1711_HPS_M_MOBX_05_E%2CAMH_RBWM_PWS_1712_HPS_M_MSK_06_E%2CAMH_RBWM_PWS_1711_HPS_M_STMA_07_E%2CAMH_RBWM_PWS_1712_HPS_M_ADVACQ_08_E%2CAMH_RBWM_PWS_1711_HPS_M_CONHUB_09_E%2CAMH_RBWM_PWS_2017_HPB_HP_01_E%2CAMH_RBWM_PWS_2017_HPB_ADV_01_E%2CAMH_RBWM_PWS_2017_HPB_PIA_01_E%2CAMH_RBWM_PWS_2016_MID_GPBSITE_E%2CAMH_RBWM_PWS_2015_CCT_M_MASCRD_03_X%2CHGHQ_Hql1.1_On%2CAMH_RBWM_PWS_2016_BOT_GPBSITE_E&c2=pws%3Ahomepage&v2=pws%3Ahomepage&c3=homepage&v3=www.hsbc.com.hk%2F&v4=pws%3Ahomepage&c5=homepage&v5=RBWM&c6=hsbc-rbwm-hk&v6=general&c7=11%3A50%20AM%7CTuesday&v7=homepage&c8=N%2FA&v8=homepage&v10=HSBC&v11=Asia%20Pacific&v12=en&v13=Hong%20Kong%20SAR&v15=11%3A50%20AM%7CTuesday&v16=hsbc-rbwm-hk&c17=hk-rbwm&v17=hk-rbwm&v22=0&v51=N%2FA&v52=N%2FA&s=1680x1050&c=24&j=1.6&v=N&k=Y&bw=1866&bh=634&AQE=1
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDPx7OaGYa0D0pepi4NhkjtyhY_sxEjESg",
+    authDomain: "test-f5a84.firebaseapp.com",
+    databaseURL: "https://test-f5a84.firebaseio.com",
+    projectId: "test-f5a84",
+    storageBucket: "test-f5a84.appspot.com",
+    messagingSenderId: "564153605467"
+  };
+  firebase.initializeApp(config);
+</script>
+  <title>Firebase App</title>
+  <style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<h1>Index</h1>
+<form action="/form" method="POST">
+    <label>Name:</label>
+    <input name="name">
+    <label>Email:</label>
+    <input name="email">
+    <input type="submit">
+</form>
+
+<table id="table">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+  </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<div id="browser">
+Your browser is:   
+</div>
+
+<div id="navigator">
+navigator object is:   
+</div>
+
+<ul id="newlist">
+
+</ul>
+
+
+
+<script>
+var list = document.getElementById('newlist');
+var table = document.getElementById('table');
+var database = firebase.database();
+var rows = "";
+var userRef = firebase.database().ref().child('users');
+  
+userRef.on('child_added', function(snap){
+  $('tbody').append("<tr><td>"+snap.val().username+"</td><td>"+snap.val().email+"</td></tr>" );
+})
+  
+var broswer = navigator.userAgent;
+$('#browser').append(broswer);
+  
+var navigator = navigator;
+$('#navigator').append(navigator);
+console.log(navigator)
+  
+</script>
+
+

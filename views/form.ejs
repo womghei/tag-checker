@@ -1,0 +1,89 @@
+<head>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/1.5.1/fingerprint2.min.js"></script>
+      <script src="tracking.js"></script>  
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>  
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <style>
+        .loader {
+          border: 6px solid #f3f3f3; 
+          border-top: 6px solid #2bbbad; 
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+          animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+  </style>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <title>Tealium Checker</title>
+
+</head>
+<body>
+  <div class="container">
+  <h1>Tealium Checker</h1>
+  <h4>Please copy and paste the full URL (with http:// or https://)</h4>
+  <form id="urlform" class="col s12">
+    Full URL: <input type="text" class="url" required><br>
+<!--     <input type="submit" value="Submit" class="btn"> -->
+    <div class="error">
+      
+    </div>
+    
+    <button class="btn waves-effect waves-light" id="submit">Check</button>
+    
+    
+  </form>
+  
+  <div class="response">
+  
+  </div>
+  
+  <div class="more">
+  
+
+  </div>
+  </div>
+</body>
+
+<script>
+  $("#urlform").submit(function(){
+  var url = document.getElementsByClassName("url")[0].value;
+  event.preventDefault();
+  if (url.indexOf("http://")!=-1 || url.indexOf("https://")!=-1){
+  $('.error').html("");
+  $('#submit').prop('disabled', true);
+  //$('#submit-i').html('<i id="uploading" class="fa fa-spinner fa-spin middle " style="font-size:30px"></i>');
+  $('#submit').html('<div class="loader"></div>');
+  document.getElementsByClassName("response")[0].innerHTML = "";
+  document.getElementsByClassName("more")[0].innerHTML = "";
+    $.get("https://skillful-submarine.glitch.me/get2?url="+ url, function(data, status){
+      console.log("status: " + status);
+        console.log("Data: " + data.response);
+        $(".response").append(data.response);
+        document.getElementsByClassName("url")[0].value="";
+        $(".more").append("<p>Learn more about the result <a target='_blank' href='"+"https://phantom-js.glitch.me/check?url="+url+"'>here.</a></p>");
+        $('#submit').prop('disabled', false);
+        $('#submit').html("Check");
+    });
+    }
+   else {
+   $('.error').html("Invalid URL");
+   }
+});
+</script>
+
+
+
+
+
+
+
+
+
+
