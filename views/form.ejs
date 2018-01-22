@@ -1,10 +1,12 @@
 <head>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/1.5.1/fingerprint2.min.js"></script>
-      <script src="tracking.js"></script>  
+<!--       <script src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/1.5.1/fingerprint2.min.js"></script>
+      <script src="tracking.js"></script>   -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>  
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link href="prism.css" rel="stylesheet" />
+      <script src="prism.js"></script>
       <style>
         .loader {
           border: 6px solid #f3f3f3; 
@@ -18,6 +20,13 @@
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
+        }
+        code[class*="language-html-wrap"],
+        pre[class*="language-html-wrap"] {
+          white-space: pre-wrap;
+        };
+        .highlight{
+          background: yellow;
         }
   </style>
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -36,7 +45,7 @@
     </div>
     
     <button class="btn waves-effect waves-light" id="submit">Check</button>
-    
+    <progress id="progress" value="0" style="display:none"></progress>
     
   </form>
   
@@ -48,32 +57,104 @@
   
 
   </div>
+  
+  <div id="resourcearea" style="display:none;">
+    
+
+  </div>  
+    
+    
+  
+  <div id="htmlarea" style="display:none;">
+    
+    <h5 id="tealium"></h5>
+    <h6>Here's the full HTML:</h6>
+    <pre class="language-html language-html-wrap">
+        <code class="language-html language-html-wrap" id="htmlcode">
+          
+        </code>
+    </pre> 
   </div>
+    </div>
 </body>
 
 <script>
   $("#urlform").submit(function(){
-  var url = document.getElementsByClassName("url")[0].value;
+  var url = document.getElementsByClassName("url")[0].value; 
   event.preventDefault();
   if (url.indexOf("http://")!=-1 || url.indexOf("https://")!=-1){
+    //fruits.indexOf("Apple");
   $('.error').html("");
   $('#submit').prop('disabled', true);
+  
   //$('#submit-i').html('<i id="uploading" class="fa fa-spinner fa-spin middle " style="font-size:30px"></i>');
   $('#submit').html('<div class="loader"></div>');
+  $('#progress').show();
   document.getElementsByClassName("response")[0].innerHTML = "";
   document.getElementsByClassName("more")[0].innerHTML = "";
-    $.get("https://skillful-submarine.glitch.me/get2?url="+ url, function(data, status){
-      console.log("status: " + status);
-        console.log("Data: " + data.response);
-        $(".response").append(data.response);
-        document.getElementsByClassName("url")[0].value="";
-        $(".more").append("<p>Learn more about the result <a target='_blank' href='"+"https://phantom-js.glitch.me/check?url="+url+"'>here.</a></p>");
+  $('#resourcearea').html("");
+  $('#resourcearea').hide();
+  $('#htmlarea').hide();
+  $('#htmlcode').html("");
+    $.ajax({
+    xhr: function() {
+          var xhr = new window.XMLHttpRequest();
+          var progressBar = document.getElementById("progress")
+          xhr.addEventListener("progress", function(evt) {
+           if (evt.lengthComputable) {
+               progressBar.max = evt.total;
+               progressBar.value = evt.loaded;
+               var percentComplete = evt.loaded / evt.total;
+               console.log(percentComplete*100 + '%');
+             }
+           }, false);
+          xhr.addEventListener("loadstart", function(evt) {
+               progressBar.value = 0;
+           });
+          xhr.addEventListener("loadend", function(evt) {
+               progressBar.value = evt.loaded;
+           });
+      
+          return xhr;
+    },
+    type: 'GET',
+    url: "https://phantom-js.glitch.me/check?url="+url,
+    success: function(data){
+        console.log(data.resources);
+        $('#htmlarea').show();
+        $('#tealium').text(data.tealium)
+        $('#htmlcode').text(data.html);
+        $('#resourcearea').show();
+        var resources = data.resources;
+        if (data.resources.length>0){
+          $('#resourcearea').append('<h5>Adobe tag loaded:</h5>');
+          for (var resource in resources){
+          $('#resourcearea').append('<pre class="language-html language-html-wrap"><code class="language-html language-html-  wrap">'+resources[resource]+'</code></pre>')
+        };
+        } else {
+          $('#resourcearea').append('<h5>No Adobe tag found</h5>');
+        }       
         $('#submit').prop('disabled', false);
         $('#submit').html("Check");
-    });
+        $('#progress').hide();
     }
+});
+    
+  }    
+
+    
+    // $.get("https://skillful-submarine.glitch.me/get2?url="+ url, function(data, status){
+    //   console.log("status: " + status);
+    //     console.log("Data: " + data.response);
+    //     $(".response").append(data.response);
+    //     document.getElementsByClassName("url")[0].value="";
+    //     $(".more").append("<p>Learn more about the result <a target='_blank' href='"+"https://phantom-js.glitch.me/check?url="+url+"'>here.</a></p>");
+    //     $('#submit').prop('disabled', false);
+    //     $('#submit').html("Check");
+    // });
+    // }
    else {
-   $('.error').html("Invalid URL");
+   $('.error').html("Invalid HTML");
    }
 });
 </script>

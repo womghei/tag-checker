@@ -1,0 +1,61 @@
+<head>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>  
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.es6.js"></script>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <link href="prism.css" rel="stylesheet" />
+      <script src="prism.js"></script>
+  <style>
+    code[class*="language-html-wrap"],
+    pre[class*="language-html-wrap"] {
+      white-space: pre-wrap;
+    };
+    .highlight{
+          background: yellow;
+        }
+  </style>
+  <title>Tealium Checker</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Adobe tag loaded:</h1>
+    <%for (var resource in result.resources){%>
+      <pre class="language-html language-html-wrap">
+        <code class="language-html language-html-wrap">
+          <%= result.resources[resource].trim() %>
+        </code>
+      </pre>    
+    <%}%>
+    
+  <h5>Here's the full HTML with Tealium related code highlighted in <span class="highlight">yellow</span>:</h5>
+    <div class="html">
+    <pre>
+      <code id="html" class="highlight language-html">
+        <%= result.html %>
+      </code>
+    </pre>
+    </div>
+  </div>
+</body>
+
+<script>
+  window.addEventListener('DOMContentLoaded', function(){
+  var instance = new Mark(document.querySelector("div.html"));
+    instance.mark("utag", {
+    "className": "highlight"
+  });
+  })
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
