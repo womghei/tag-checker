@@ -2,6 +2,7 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <!--       <script src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/1.5.1/fingerprint2.min.js"></script>
       <script src="tracking.js"></script>   -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.es6.js"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>  
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -16,7 +17,6 @@
           height: 30px;
           animation: spin 2s linear infinite;
         }
-
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
@@ -24,9 +24,32 @@
         code[class*="language-html-wrap"],
         pre[class*="language-html-wrap"] {
           white-space: pre-wrap;
-        };
+        }
         .highlight{
           background: yellow;
+        }
+        progress {
+          border: 0;
+          height: 11px;
+          border-radius: 20px;
+          background-color: #26a69a;
+        }
+        progress::-webkit-progress-bar {
+          border: 0;
+          height: 11px;
+          border-radius: 20px;
+        }
+        progress::-webkit-progress-value {
+          border: 0;
+          height: 11px;
+          border-radius: 20px;
+          background-color: #26a69a;
+        }
+        progress::-moz-progress-bar {
+          border: 0;
+          height: 11px;
+          border-radius: 20px;
+          background-color: #26a69a;
         }
   </style>
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -40,13 +63,14 @@
   <form id="urlform" class="col s12">
     Full URL: <input type="text" class="url" required><br>
 <!--     <input type="submit" value="Submit" class="btn"> -->
-    <div class="error">
-      
-    </div>
+    
     
     <button class="btn waves-effect waves-light" id="submit">Check</button>
     <progress id="progress" value="0" style="display:none"></progress>
-    
+    <br>
+    <div class="error">
+      
+    </div>
   </form>
   
   <div class="response">
@@ -137,11 +161,16 @@
         $('#submit').prop('disabled', false);
         $('#submit').html("Check");
         $('#progress').hide();
+    },
+    error: function(data){
+      $('.error').html("Error ("+data.status+') Please refresh the page and try again.');
+      $('#submit').prop('disabled', false);
+      $('#submit').html("Check");
+      $('#progress').hide();
     }
 });
     
   }    
-
     
     // $.get("https://skillful-submarine.glitch.me/get2?url="+ url, function(data, status){
     //   console.log("status: " + status);

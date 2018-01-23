@@ -9,6 +9,10 @@ app.set('view engine','ejs');
 app.use(express.static('public'));
 
 
+app.get('/', (req,res) => {
+  res.send('You reached index!');
+});
+
 app.get('/form', (req,res) => {
   res.render('form');
 });
@@ -31,12 +35,14 @@ var destination = req.query.url;
   var resources = [];
   var html;
   var tealium = 'Tealium not found';
-  var result = {resources:resources, html:html,tealium:tealium};
+  var adobe = 'Adobe not found';
+  var result = {resources:resources, html:html,tealium:tealium, adobe:adobe};
   const instance = await phantom.create(['--ignore-ssl-errors=yes','--ssl-protocol=any']);
   const page = await instance.createPage();
   await page.on('onResourceRequested', function(requestData) {
     if (requestData.url.includes("omtrdc.net/b/ss")){   
             result.tealium='Tealium found';
+            result.adobe='Adobe found';
             console.info('Requesting', requestData.url);
             resources.push(requestData.url);
             var query = url.parse(requestData.url, true);
