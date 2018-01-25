@@ -1,12 +1,18 @@
-
 var express = require('express');
 var app = express();
 var url = require('url');
 var bodyParser = require('body-parser')
 const phantom = require('phantom');
+var Airtable = require('airtable');
 app.use(bodyParser.urlencoded({extended: false, limit: '5000mb'}))
 app.set('view engine','ejs');
 app.use(express.static('public'));
+
+Airtable.configure({
+    endpointUrl: process.env.ENDPOINT_URL,
+    apiKey: process.env.API_KEY
+});
+var base = Airtable.base(process.env.AIRTABLE_BASE);
 
 
 app.get('/', (req,res) => {
@@ -57,36 +63,18 @@ var destination = req.query.url;
   await instance.exit();
   //res.render("result",{result:result})
   res.send(result); 
+  base('Event').create({
+    "Time": new Date(),
+    "Page": destination,
+    "Device": req.headers["user-agent"],
+    "IP": req.headers["x-forwarded-for"]
+    },  function(err, record) {
+      if (err) { console.error(err); return; }
+    console.log(record.getId());
+    console.log('success')
+});
 })();
 });
-
-
-// app.get("/check", function (req, res) {
-// var destination = req.query.url;
-// (async function() {
-//   var resources = [];
-//   var html;
-//   var result = {resources:resources, html:html};
-//   const instance = await phantom.create(['--ignore-ssl-errors=yes','--ssl-protocol=any']);
-//   const page = await instance.createPage();
-//   await page.on('onResourceRequested', function(requestData) {
-//     if (requestData.url.includes("omtrdc.net/b/ss")){                                                                            
-//             console.info('Requesting', requestData.url);
-//             resources.push(requestData.url);
-//             var query = url.parse(requestData.url, true);
-//             console.log(query.query)
-//           }
-//   });
-//   const status = await page.open(destination);
-//   const content = await page.property('content');
-//   //console.log(content);
-//   result.html=content;
-//   //console.log(result.resources)
-//   await instance.exit();
-//   res.render("result",{result:result})
-//   //res.send(result); 
-// })();
-// });
 
 var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);

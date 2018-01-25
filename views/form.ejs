@@ -1,7 +1,7 @@
 <head>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-<!--       <script src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/1.5.1/fingerprint2.min.js"></script>
-      <script src="tracking.js"></script>   -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/1.5.1/fingerprint2.min.js"></script>
+      <script src="tracking.js"></script>  
       <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.es6.js"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>  
@@ -156,7 +156,7 @@
           $('#resourcearea').append('<pre class="language-html language-html-wrap"><code class="language-html language-html-  wrap">'+resources[resource]+'</code></pre>')
         };
         } else {
-          $('#resourcearea').append('<h5>No Adobe tag found</h5>');
+          $('#resourcearea').append('<h5>Adobe tag not found</h5>');
         }       
         $('#submit').prop('disabled', false);
         $('#submit').html("Check");
